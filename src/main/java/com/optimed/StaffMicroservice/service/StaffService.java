@@ -2,6 +2,8 @@ package com.optimed.StaffMicroservice.service;
 
 import com.optimed.StaffMicroservice.model.Staff;
 import com.optimed.StaffMicroservice.repository.StaffRepository;
+import com.optimed.StaffMicroservice.response.StaffResponse;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,17 +13,33 @@ import java.util.Optional;
 @Service
 public class StaffService {
     @Autowired
-    private StaffRepository staffRepo;
+    private StaffRepository repo;
 
-    public List<Staff> getAllStaff() {
-        return staffRepo.findAll();
+    @Autowired
+    private ModelMapper mapper;
+
+//    public StaffService() {
+//        super();
+//    }
+
+    public StaffService(StaffRepository staffRepo) {
+        super();
+        this.repo = staffRepo;
+    }
+    public List<Staff> getAllStaffs() {
+        return repo.findAll();
     }
 
-    public Staff getStaffById(long staffid) {
-        Optional<Staff> optional = staffRepo.findById(staffid);
-        Staff staff = null;
+//    public List<Staff> getAllStaffByRole(String role) {
+//        return repo.getAllStaffByRole(role);
+//    }
+    public StaffResponse getStaffById(long id) {
+        Optional<Staff> optional = repo.findById(id);
         if(optional.isPresent())
-            staff = optional.get();
-        return staff;
+            return mapper.map(optional, StaffResponse.class);
+        return null;
+    }
+    public Staff saveStaff(Staff staff) {
+        return repo.save(staff);
     }
 }
