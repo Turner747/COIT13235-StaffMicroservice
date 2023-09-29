@@ -1,5 +1,7 @@
 package com.optimed.StaffMicroservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,9 +22,10 @@ import java.util.Date;
 public class Shift implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long scheduleId;
+    private long id;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "staff_id", referencedColumnName = "id")
+    @JsonManagedReference
     private Staff staff;
     @Temporal(TemporalType.TIMESTAMP)
     private Date startTime;
@@ -31,9 +34,11 @@ public class Shift implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable=false)
     @CreationTimestamp
+    @JsonIgnore
     private Date insert_date;
     @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
+    @JsonIgnore
     private Date updated_date;
 //    Collection<Appointment> appointments;
 

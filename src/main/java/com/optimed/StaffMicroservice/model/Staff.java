@@ -1,5 +1,8 @@
 package com.optimed.StaffMicroservice.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,10 +25,8 @@ public class Staff implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "first_name")
-    private String firstName;
-    @Column(name = "last_name")
-    private String lastName;
+    private String first_name;
+    private String last_name;
     @Temporal(TemporalType.DATE)
     private Date dob;
     private String street;
@@ -35,21 +36,26 @@ public class Staff implements Serializable {
     private String phone;
     @Column(unique = true, nullable = false)
     private String email;
+    @JsonIgnore
     private String password;
     private String provider_number;
     private String prescriber_number;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable=false)
     @CreationTimestamp
+    @JsonIgnore
     private Date insert_date;
     @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
+    @JsonIgnore
     private Date updated_date;
     @OneToMany(fetch = FetchType.LAZY)
+    @JsonBackReference
     private Collection<Shift> shifts;
 
 //    private Collection<VisitNote> visit_notes;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonManagedReference
     @JoinTable(
             name = "staff_roles",
             joinColumns = @JoinColumn(name = "staff_id", referencedColumnName = "id"),
