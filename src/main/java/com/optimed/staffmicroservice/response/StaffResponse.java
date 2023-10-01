@@ -1,8 +1,8 @@
-package com.optimed.StaffMicroservice.response;
+package com.optimed.staffmicroservice.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.optimed.StaffMicroservice.model.Role;
-import com.optimed.StaffMicroservice.model.Shift;
+import com.optimed.staffmicroservice.model.Role;
+import com.optimed.staffmicroservice.model.Shift;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -23,8 +23,8 @@ public class StaffResponse {
     private String phone;
     private String email;
     private String password;
-    private String provider_number;
-    private String prescriber_number;
+    private String providerNumber;
+    private String prescriberNumber;
     @JsonIgnore
     private Collection<Shift> shifts;
     //    private Collection<VisitNote> visit_notes;

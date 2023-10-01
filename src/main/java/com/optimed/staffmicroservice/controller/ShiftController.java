@@ -1,9 +1,9 @@
-package com.optimed.StaffMicroservice.controller;
+package com.optimed.staffmicroservice.controller;
 
-import com.optimed.StaffMicroservice.mapper.ObjectMapper;
-import com.optimed.StaffMicroservice.model.Shift;
-import com.optimed.StaffMicroservice.repository.ShiftRepository;
-import com.optimed.StaffMicroservice.response.ShiftResponse;
+import com.optimed.staffmicroservice.mapper.ObjectMapper;
+import com.optimed.staffmicroservice.model.Shift;
+import com.optimed.staffmicroservice.repository.ShiftRepository;
+import com.optimed.staffmicroservice.response.ShiftResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,36 +17,36 @@ import java.util.Optional;
 @AllArgsConstructor
 @RequestMapping("/restapi/shifts")
 public class ShiftController {
-    public ShiftRepository shift_repo;
+    public ShiftRepository shiftRepo;
     @PostMapping
     public ResponseEntity<Shift> saveProduct(@RequestBody Shift shift) {
-        return new ResponseEntity<Shift>(shift_repo.save(shift), HttpStatus.CREATED);
+        return new ResponseEntity<Shift>(shiftRepo.save(shift), HttpStatus.CREATED);
     }
     @GetMapping
     public ResponseEntity<Collection<ShiftResponse>> getAllShifts() {
-        List<Shift> shifts = shift_repo.findAll();
+        List<Shift> shifts = shiftRepo.findAll();
         if(shifts.isEmpty())
             return ResponseEntity.notFound().build();
-        List<ShiftResponse> shift_response = ObjectMapper.mapAll(shifts, ShiftResponse.class);
+        List<ShiftResponse> shiftResponses = ObjectMapper.mapAll(shifts, ShiftResponse.class);
         return ResponseEntity.status(HttpStatus.OK)
-                .body(shift_response);
+                .body(shiftResponses);
     }
     @PutMapping("/id/{id}")
     public ResponseEntity<Shift> updateShift(@PathVariable Long id, @RequestBody Shift shift) {
-        Optional<Shift> optional = shift_repo.findById(id);
+        Optional<Shift> optional = shiftRepo.findById(id);
         if (optional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        Shift new_shift = optional.get();
-        new_shift = ObjectMapper.map(shift, Shift.class);
-        return ResponseEntity.ok(shift_repo.save(new_shift));
+        Shift newShift = optional.get();
+        newShift = ObjectMapper.map(shift, Shift.class);
+        return ResponseEntity.ok(shiftRepo.save(newShift));
     }
     @GetMapping("/id/{id}")
     public ResponseEntity<ShiftResponse> getShiftById(@PathVariable("id") long id) {
-        Optional<Shift> optional = shift_repo.findById(id);
+        Optional<Shift> optional = shiftRepo.findById(id);
         if(optional.isPresent()) {
-            ShiftResponse shift_response = ObjectMapper.map(optional, ShiftResponse.class);
-            return ResponseEntity.status(HttpStatus.OK).body(shift_response);
+            ShiftResponse shiftResponse = ObjectMapper.map(optional, ShiftResponse.class);
+            return ResponseEntity.status(HttpStatus.OK).body(shiftResponse);
         }
         return ResponseEntity.notFound().build();
     }

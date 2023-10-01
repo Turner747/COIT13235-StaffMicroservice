@@ -1,6 +1,6 @@
-package com.optimed.StaffMicroservice.response;
+package com.optimed.staffmicroservice.response;
 
-import com.optimed.StaffMicroservice.model.Role;
+import com.optimed.staffmicroservice.model.Role;
 import lombok.Data;
 
 import java.util.Collection;

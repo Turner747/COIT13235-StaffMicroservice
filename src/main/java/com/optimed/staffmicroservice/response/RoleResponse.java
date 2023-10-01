@@ -1,8 +1,8 @@
-package com.optimed.StaffMicroservice.response;
+package com.optimed.staffmicroservice.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.optimed.StaffMicroservice.model.Privilege;
-import com.optimed.StaffMicroservice.model.Staff;
+import com.optimed.staffmicroservice.model.Privilege;
+import com.optimed.staffmicroservice.model.Staff;
 import lombok.Data;
 
 import java.util.Collection;

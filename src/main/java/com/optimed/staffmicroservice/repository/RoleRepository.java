@@ -1,6 +1,6 @@
-package com.optimed.StaffMicroservice.repository;
+package com.optimed.staffmicroservice.repository;
 
-import com.optimed.StaffMicroservice.model.Role;
+import com.optimed.staffmicroservice.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

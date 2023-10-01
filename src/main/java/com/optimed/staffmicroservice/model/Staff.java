@@ -1,4 +1,4 @@
-package com.optimed.StaffMicroservice.model;
+package com.optimed.staffmicroservice.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -25,8 +25,10 @@ public class Staff implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String first_name;
-    private String last_name;
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "last_name")
+    private String lastName;
     @Temporal(TemporalType.DATE)
     private Date dob;
     private String street;
@@ -38,17 +40,20 @@ public class Staff implements Serializable {
     private String email;
     @JsonIgnore
     private String password;
-    private String provider_number;
-    private String prescriber_number;
+    @Column(name = "provider_number")
+    private String providerNumber;
+    @Column(name = "prescriber_number")
+    private String prescriberNumber;
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(updatable=false)
+    @Column(name = "insert_date", updatable=false)
     @CreationTimestamp
     @JsonIgnore
-    private Date insert_date;
+    private Date insertDate;
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "update_date")
     @UpdateTimestamp
     @JsonIgnore
-    private Date updated_date;
+    private Date updateDate;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
     private Collection<Shift> shifts;

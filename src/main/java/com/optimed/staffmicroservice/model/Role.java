@@ -1,8 +1,7 @@
-package com.optimed.StaffMicroservice.model;
+package com.optimed.staffmicroservice.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -29,14 +28,15 @@ public class Role implements Serializable {
     @JsonBackReference
     private Collection<Staff> staff;
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(updatable=false)
+    @Column(name = "insert_date", updatable=false)
     @CreationTimestamp
     @JsonIgnore
-    private Date insert_date;
+    private Date insertDate;
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "update_date")
     @UpdateTimestamp
     @JsonIgnore
-    private Date updated_date;
+    private Date updateDate;
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonManagedReference
     @JoinTable(

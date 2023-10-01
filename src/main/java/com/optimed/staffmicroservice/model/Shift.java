@@ -1,4 +1,4 @@
-package com.optimed.StaffMicroservice.model;
+package com.optimed.staffmicroservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -28,18 +28,21 @@ public class Shift implements Serializable {
     @JsonManagedReference
     private Staff staff;
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "start_time")
     private Date startTime;
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "finish_time")
     private Date finishTime;
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(updatable=false)
+    @Column(name = "insert_date", updatable=false)
     @CreationTimestamp
     @JsonIgnore
-    private Date insert_date;
+    private Date insertDate;
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "update_date")
     @UpdateTimestamp
     @JsonIgnore
-    private Date updated_date;
+    private Date updateDate;
 //    Collection<Appointment> appointments;
 
     @PrePersist
