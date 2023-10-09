@@ -38,4 +38,13 @@ public class RoleController {
         }
         return ResponseEntity.notFound().build();
     }
+    @GetMapping("/name/{name}")
+    public ResponseEntity<RoleResponse> getRoleByName(@PathVariable("name") String name) {
+        Role role = roleRepo.findByName(name);
+        if(role!=null) {
+            RoleResponse roleResponse = ObjectMapper.map(role, RoleResponse.class);
+            return ResponseEntity.status(HttpStatus.OK).body(roleResponse);
+        }
+        return ResponseEntity.notFound().build();
+    }
 }
