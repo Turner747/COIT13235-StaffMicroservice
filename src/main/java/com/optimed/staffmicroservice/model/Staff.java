@@ -3,6 +3,7 @@ package com.optimed.staffmicroservice.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -30,11 +32,12 @@ public class Staff implements Serializable {
     @Column(name = "last_name")
     private String lastName;
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dob;
     private String street;
     private String suburb;
     private String state;
-    private int postcode;
+    private String postcode;
     private String phone;
     @Column(unique = true, nullable = false)
     private String email;
@@ -56,15 +59,11 @@ public class Staff implements Serializable {
     private Date updateDate;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
+    @JsonIgnore
     private Collection<Shift> shifts;
-
-//    private Collection<VisitNote> visit_notes;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id", referencedColumnName = "id")
     @JsonManagedReference
-    @JoinTable(
-            name = "staff_roles",
-            joinColumns = @JoinColumn(name = "staff_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
-    )
-    private Collection<Role> roles;
+    @JsonIgnore
+    private Role role;
 }
