@@ -1,4 +1,4 @@
-package com.optimed.StaffMicroservice.mapper;
+package com.optimed.staffmicroservice.mapper;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ObjectMapper {
-    private static ModelMapper model_mapper;
+    private static final ModelMapper model_mapper;
     static {
         model_mapper = new ModelMapper();
         model_mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
