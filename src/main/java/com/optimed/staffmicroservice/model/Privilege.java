@@ -44,5 +44,9 @@ public class Privilege implements Serializable {
     public Privilege(String name) {
         this.name = name;
     }
+    @Override
+    public String toString() {
+        return "Privilege(id=" + getId() + ", name=" + getName() + ")";
+    }
 }
 
