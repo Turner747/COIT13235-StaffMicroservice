@@ -1,16 +1,13 @@
 package com.optimed.staffmicroservice.controller;
 
 import com.optimed.staffmicroservice.mapper.ObjectMapper;
-import com.optimed.staffmicroservice.model.Role;
 import com.optimed.staffmicroservice.model.Staff;
 import com.optimed.staffmicroservice.repository.StaffRepository;
 import com.optimed.staffmicroservice.response.StaffResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.Collection;
 import java.util.List;
