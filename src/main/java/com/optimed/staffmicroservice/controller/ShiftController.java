@@ -18,9 +18,10 @@ import java.util.Optional;
 @RequestMapping("/restapi/shifts")
 public class ShiftController {
     public ShiftRepository shiftRepo;
-    @PostMapping
-    public ResponseEntity<Shift> saveProduct(@RequestBody Shift shift) {
-        return new ResponseEntity<Shift>(shiftRepo.save(shift), HttpStatus.CREATED);
+    @PostMapping(consumes = "application/json")
+    public ResponseEntity<ShiftResponse> saveProduct(@RequestBody ShiftResponse shiftResponse) {
+        Shift newShift = shiftRepo.save(ObjectMapper.map(shiftResponse, Shift.class));
+        return ResponseEntity.status(HttpStatus.CREATED).body(ObjectMapper.map(newShift, ShiftResponse.class));
     }
     @GetMapping
     public ResponseEntity<Collection<ShiftResponse>> getAllShifts() {
@@ -31,22 +32,21 @@ public class ShiftController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(shiftResponses);
     }
-    @PutMapping("/id/{id}")
-    public ResponseEntity<Shift> updateShift(@PathVariable Long id, @RequestBody Shift shift) {
-        Optional<Shift> optional = shiftRepo.findById(id);
-        if (optional.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        Shift newShift = optional.get();
-        newShift = ObjectMapper.map(shift, Shift.class);
-        return ResponseEntity.ok(shiftRepo.save(newShift));
-    }
     @GetMapping("/id/{id}")
     public ResponseEntity<ShiftResponse> getShiftById(@PathVariable("id") long id) {
         Optional<Shift> optional = shiftRepo.findById(id);
         if(optional.isPresent()) {
             ShiftResponse shiftResponse = ObjectMapper.map(optional, ShiftResponse.class);
             return ResponseEntity.status(HttpStatus.OK).body(shiftResponse);
+        }
+        return ResponseEntity.notFound().build();
+    }
+    @GetMapping("delete/{id}")
+    public ResponseEntity<ShiftResponse> deleteShiftById(@PathVariable("id") long id) {
+        Optional<Shift> optional = shiftRepo.findById(id);
+        if(optional.isPresent()) {
+            shiftRepo.deleteById(id);
+            return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
     }
