@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -28,9 +29,11 @@ public class Shift implements Serializable {
     @JsonManagedReference
     private Staff staff;
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     @Column(name = "start_time")
     private Date startTime;
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     @Column(name = "finish_time")
     private Date finishTime;
     @Temporal(TemporalType.TIMESTAMP)
