@@ -14,8 +14,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-@Component
-public class SetupDataLoader implements
+//@Component
+public class SetupDataLoader { /*} implements
         ApplicationListener<ContextRefreshedEvent> {
 
     boolean alreadySetup = false;
@@ -80,5 +80,5 @@ public class SetupDataLoader implements
             roleRepository.save(role);
         }
         return role;
-    }
+    }*/
 }

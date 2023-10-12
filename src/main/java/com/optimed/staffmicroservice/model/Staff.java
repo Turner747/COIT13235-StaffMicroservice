@@ -62,7 +62,13 @@ public class Staff implements Serializable {
     @JsonIgnore
     private Collection<Shift> shifts;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id", referencedColumnName = "id")
+    @JsonManagedReference
+    @JsonIgnore
+    private Role role;
+
+    /*@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "role_staff",
             joinColumns = @JoinColumn(
@@ -71,5 +77,5 @@ public class Staff implements Serializable {
                     name = "role_id", referencedColumnName = "id"))
     @JsonManagedReference
     @JsonIgnore
-    private Collection<Role> role;
+    private Collection<Role> role;*/
 }

@@ -25,10 +25,15 @@ public class Role implements Serializable {
     @Column(unique = true)
     private String name;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "role")
+    @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
     @JsonIgnore
     private Collection<Staff> staff;
+
+    /*@ManyToMany(fetch = FetchType.EAGER, mappedBy = "role")
+    @JsonBackReference
+    @JsonIgnore
+    private Collection<Staff> staff;*/
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "insert_date", updatable=false)
@@ -44,6 +49,7 @@ public class Role implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonManagedReference
+    @JsonIgnore
     @JoinTable(
             name = "roles_privileges",
             joinColumns = @JoinColumn(
