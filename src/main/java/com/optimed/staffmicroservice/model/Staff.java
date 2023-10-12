@@ -41,6 +41,7 @@ public class Staff implements Serializable {
     @Column(unique = true, nullable = false)
     private String email;
     @JsonIgnore
+    @Column(nullable = false)
     private String password;
     @Column(name = "provider_number")
     private String providerNumber;
