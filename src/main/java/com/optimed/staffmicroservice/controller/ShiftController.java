@@ -18,33 +18,51 @@ import java.util.Optional;
 @RequestMapping("/restapi/shifts")
 public class ShiftController {
     public ShiftRepository shiftRepo;
+
     @PostMapping(consumes = "application/json")
     public ResponseEntity<ShiftResponse> saveProduct(@RequestBody ShiftResponse shiftResponse) {
-        Shift newShift = shiftRepo.save(ObjectMapper.map(shiftResponse, Shift.class));
+        Shift newShift;
+        try {
+            newShift = shiftRepo.save(ObjectMapper.map(shiftResponse, Shift.class));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(ObjectMapper.map(newShift, ShiftResponse.class));
     }
+
     @GetMapping
     public ResponseEntity<Collection<ShiftResponse>> getAllShifts() {
         List<Shift> shifts = shiftRepo.findAll();
-        if(shifts.isEmpty())
+        if (shifts.isEmpty())
             return ResponseEntity.notFound().build();
         List<ShiftResponse> shiftResponses = ObjectMapper.mapAll(shifts, ShiftResponse.class);
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(shiftResponses);
+        return ResponseEntity.status(HttpStatus.OK).body(shiftResponses);
     }
+
     @GetMapping("/id/{id}")
     public ResponseEntity<ShiftResponse> getShiftById(@PathVariable("id") long id) {
         Optional<Shift> optional = shiftRepo.findById(id);
-        if(optional.isPresent()) {
+        if (optional.isPresent()) {
             ShiftResponse shiftResponse = ObjectMapper.map(optional, ShiftResponse.class);
             return ResponseEntity.status(HttpStatus.OK).body(shiftResponse);
         }
         return ResponseEntity.notFound().build();
     }
+
+    @GetMapping("/staff/{id}")
+    public ResponseEntity<Collection<ShiftResponse>> getShiftByStaffId(@PathVariable("id") long id) {
+        List<Shift> shifts = shiftRepo.findShiftByStaffId(id);
+        if (shifts.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        List<ShiftResponse> shiftResponse = ObjectMapper.mapAll(shifts, ShiftResponse.class);
+        return ResponseEntity.status(HttpStatus.OK).body(shiftResponse);
+    }
+
     @GetMapping("delete/{id}")
     public ResponseEntity<ShiftResponse> deleteShiftById(@PathVariable("id") long id) {
         Optional<Shift> optional = shiftRepo.findById(id);
-        if(optional.isPresent()) {
+        if (optional.isPresent()) {
             shiftRepo.deleteById(id);
             return ResponseEntity.ok().build();
         }
