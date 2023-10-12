@@ -26,24 +26,30 @@ public class Privilege implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(unique = true)
     private String name;
+
     @ManyToMany(mappedBy = "privileges")
     @JsonBackReference
     private Collection<Role> roles;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "insert_date", updatable=false)
     @CreationTimestamp
     @JsonIgnore
     private Date insertDate;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "update_date")
     @UpdateTimestamp
     @JsonIgnore
     private Date updateDate;
+
     public Privilege(String name) {
         this.name = name;
     }
+
     @Override
     public String toString() {
         return "Privilege(id=" + getId() + ", name=" + getName() + ")";

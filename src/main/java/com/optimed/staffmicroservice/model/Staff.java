@@ -60,9 +60,15 @@ public class Staff implements Serializable {
     @JsonBackReference
     @JsonIgnore
     private Collection<Shift> shifts;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id", referencedColumnName = "id")
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "role_staff",
+            joinColumns = @JoinColumn(
+                    name = "staff_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"))
     @JsonManagedReference
     @JsonIgnore
-    private Role role;
+    private Collection<Role> role;
 }

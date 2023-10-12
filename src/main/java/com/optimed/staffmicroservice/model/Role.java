@@ -24,23 +24,26 @@ public class Role implements Serializable {
     private long id;
     @Column(unique = true)
     private String name;
-    @OneToMany(fetch = FetchType.LAZY)
+
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "role")
     @JsonBackReference
     @JsonIgnore
     private Collection<Staff> staff;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "insert_date", updatable=false)
     @CreationTimestamp
     @JsonIgnore
     private Date insertDate;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "update_date")
     @UpdateTimestamp
     @JsonIgnore
     private Date updateDate;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonManagedReference
-    @JsonIgnore
     @JoinTable(
             name = "roles_privileges",
             joinColumns = @JoinColumn(
