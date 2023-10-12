@@ -50,6 +50,8 @@ public class Shift implements Serializable {
 
     @PrePersist
     @PreUpdate
-    public void validateScheduleTime() {
+    public void validateScheduleTime() throws IllegalArgumentException {
+        if(startTime.after(finishTime))
+            throw new IllegalArgumentException("Finish time should be later than start time");
     }
 }
