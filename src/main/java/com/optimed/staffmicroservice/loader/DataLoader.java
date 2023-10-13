@@ -1,13 +1,7 @@
 package com.optimed.staffmicroservice.loader;
 
-import com.optimed.staffmicroservice.model.Privilege;
-import com.optimed.staffmicroservice.model.Role;
-import com.optimed.staffmicroservice.model.Shift;
-import com.optimed.staffmicroservice.model.Staff;
-import com.optimed.staffmicroservice.repository.PrivilegeRepository;
-import com.optimed.staffmicroservice.repository.RoleRepository;
-import com.optimed.staffmicroservice.repository.ShiftRepository;
-import com.optimed.staffmicroservice.repository.StaffRepository;
+import com.optimed.staffmicroservice.model.*;
+import com.optimed.staffmicroservice.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -28,6 +22,7 @@ public class DataLoader implements ApplicationRunner {
     private RoleRepository roleRepo;
     private StaffRepository staffRepo;
     private ShiftRepository shiftRepo;
+    private PasswordRepository passwordRepo;
 
     @Override
     @Transactional
@@ -94,10 +89,12 @@ public class DataLoader implements ApplicationRunner {
         Optional<Staff> optional = staffRepo.findByEmail(email);
         if (optional.isEmpty()) {
             Staff staff = new Staff();
+            Password pwd = new Password();
+            pwd.setPassword(new BCryptPasswordEncoder().encode(password));
             staff.setFirstName(firstName);
             staff.setLastName("Smith");
             staff.setEmail(email);
-            staff.setPassword(new BCryptPasswordEncoder().encode(password));
+            staff.setPassword(pwd);
             staff.setProviderNumber(providerNumber);
             staff.setPrescriberNumber(prescriberNumber);
             staff.setRole(role);

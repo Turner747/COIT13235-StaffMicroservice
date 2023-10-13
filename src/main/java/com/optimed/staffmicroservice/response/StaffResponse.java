@@ -1,6 +1,8 @@
 package com.optimed.staffmicroservice.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.optimed.staffmicroservice.model.Password;
 import com.optimed.staffmicroservice.model.Role;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,7 +22,9 @@ public class StaffResponse {
     private String postcode;
     private String phone;
     private String email;
-    private String password;
+//    private String password;
+    @JsonProperty("password")
+    private Password password;
     private String providerNumber;
     private String prescriberNumber;
     @JsonProperty("role")

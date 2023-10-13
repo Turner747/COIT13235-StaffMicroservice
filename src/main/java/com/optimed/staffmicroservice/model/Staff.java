@@ -40,9 +40,12 @@ public class Staff implements Serializable {
     private String phone;
     @Column(unique = true, nullable = false)
     private String email;
+//    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "password_id", referencedColumnName = "id")
+    @JsonManagedReference
     @JsonIgnore
-    @Column(nullable = false)
-    private String password;
+    private Password password;
     @Column(name = "provider_number")
     private String providerNumber;
     @Column(name = "prescriber_number")

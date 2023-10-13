@@ -31,6 +31,12 @@ public class StaffController {
         List<StaffResponse> staffResponses = ObjectMapper.mapAll(staffs, StaffResponse.class);
         return ResponseEntity.status(HttpStatus.OK).body(staffResponses);
     }
+    @GetMapping("test")
+    public ResponseEntity<Collection<Staff>> getAllStaffsTest() {
+        List<Staff> staffs = staffRepo.findAll();
+
+        return ResponseEntity.status(HttpStatus.OK).body(staffs);
+    }
     @GetMapping("/doctors")
     public ResponseEntity<Collection<StaffResponse>> getAllDoctors() {
         List<Staff> staffs = staffRepo.findAllDoctors();
