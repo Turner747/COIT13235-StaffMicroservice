@@ -21,7 +21,6 @@ public class StaffController {
     @PostMapping(consumes = {"application/json"})
     public ResponseEntity<StaffResponse> saveStaff(@RequestBody StaffResponse staffResponse) {
         Staff newStaff = staffRepo.save(ObjectMapper.map(staffResponse, Staff.class));
-        System.out.println(newStaff);
         return ResponseEntity.status(HttpStatus.CREATED).body(ObjectMapper.map(newStaff, StaffResponse.class));
     }
     @GetMapping
