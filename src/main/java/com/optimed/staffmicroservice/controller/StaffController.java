@@ -1,8 +1,10 @@
 package com.optimed.staffmicroservice.controller;
 
 import com.optimed.staffmicroservice.mapper.ObjectMapper;
+import com.optimed.staffmicroservice.model.Shift;
 import com.optimed.staffmicroservice.model.Staff;
 import com.optimed.staffmicroservice.repository.StaffRepository;
+import com.optimed.staffmicroservice.response.ShiftResponse;
 import com.optimed.staffmicroservice.response.StaffResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -60,6 +62,16 @@ public class StaffController {
         if(optional.isPresent()) {
             StaffResponse staffResponse = ObjectMapper.map(optional, StaffResponse.class);
             return ResponseEntity.status(HttpStatus.OK).body(staffResponse);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("delete/{id}")
+    public ResponseEntity<StaffResponse> deleteStaffById(@PathVariable("id") long id) {
+        Optional<Staff> optional = staffRepo.findById(id);
+        if (optional.isPresent()) {
+            staffRepo.deleteById(id);
+            return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
     }

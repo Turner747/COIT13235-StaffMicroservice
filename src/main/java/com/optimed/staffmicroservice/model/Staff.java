@@ -60,7 +60,7 @@ public class Staff implements Serializable {
     @UpdateTimestamp
     @JsonIgnore
     private Date updateDate;
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "staff", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonBackReference
     @JsonIgnore
     private Collection<Shift> shifts;
