@@ -50,7 +50,7 @@ public class DataLoader implements ApplicationRunner {
         Staff user = createStaffIfNotFound("User", "user@hotmail.com",
                 "user", null, null, roleRepo.findByName("ROLE_USER"));
         Staff doctor = createStaffIfNotFound("Dr. John", "john@hotmail.com",
-                "pwdpwd", "123456789", "123456789", roleRepo.findByName("ROLE_USER"));
+                "pwdpwd", "123456789", "123456789", roleRepo.findByName("ROLE_ADMIN"));
         Staff staff = createStaffIfNotFound("James", "james@hotmail.com",
                 "pwdpwd", null, null, roleRepo.findByName("ROLE_USER"));
 
